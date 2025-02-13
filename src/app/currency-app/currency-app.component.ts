@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header/header.component";
+import { historyKey } from './constants';
 
 @Component({
   selector: 'app-currency-app',
@@ -8,6 +9,8 @@ import { HeaderComponent } from "./header/header.component";
   templateUrl: './currency-app.component.html',
   styleUrl: './currency-app.component.scss'
 })
-export class CurrencyAppComponent {
-
+export class CurrencyAppComponent implements OnInit {
+  ngOnInit() {
+    sessionStorage.removeItem(historyKey)
+  }
 }

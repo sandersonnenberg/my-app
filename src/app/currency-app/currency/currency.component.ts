@@ -6,11 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
-enum DEFAULT_CURRENCIES {
-  USD = 'USD',
-  EUR = 'EUR'
-}
+import { ResultItem } from '../types';
+import { DEFAULT_CURRENCIES, historyKey } from '../constants';
 
 @Component({
   selector: 'app-currency',
@@ -20,8 +17,8 @@ enum DEFAULT_CURRENCIES {
   styleUrl: './currency.component.scss'
 })
 export class CurrencyComponent implements OnInit {
-  amount: number = 1;
-  submitedAmount: number = 1;
+  amount: number | null = null;
+  submitedAmount: number | null = null;
   sumittedCurrency: string = '';
   fromCurrency: string = DEFAULT_CURRENCIES.USD;
   toCurrency: string = DEFAULT_CURRENCIES.EUR;
@@ -44,16 +41,30 @@ export class CurrencyComponent implements OnInit {
       return;
     }
 
-    const queryParams = `?amount=${this.amount}&from=${this.fromCurrency}&to=${this.toCurrency}`;
-    this.submitedAmount = this.amount;
+    this.submitedAmount = this?.amount;
     this.sumittedCurrency = this.toCurrency;
   
+    const queryParams = `?amount=${this?.amount}&from=${this.fromCurrency}&to=${this.toCurrency}`;
     const url = `https://api.frankfurter.app/latest${queryParams}`;
 
     fetch(url)
       .then(data => data.json())
       .then(data => {
         this.convertedAmount = data.rates[this.toCurrency];
+
+        const storedHistory = sessionStorage.getItem(historyKey);
+  
+        const conversationRecord: ResultItem = {
+          amount: Number(this?.submitedAmount),
+          from: this.fromCurrency,
+          to: this.sumittedCurrency,
+          result: data.rates[this.toCurrency]
+        }
+        
+        const history = storedHistory ? [...JSON.parse(storedHistory)] : []
+        history.push(conversationRecord)
+        sessionStorage.setItem(historyKey, JSON.stringify(history));
+       
       })
   }
 }

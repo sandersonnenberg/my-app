@@ -35,7 +35,7 @@
     <button
       mat-flat-button
       color="primary"
-      [disabled]="amount < 1"
+      [disabled]="!amount || amount < 1"
       (click)="convertCurrency()"
     >
       Convert

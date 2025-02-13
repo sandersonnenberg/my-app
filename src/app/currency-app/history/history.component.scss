@@ -1,0 +1,19 @@
+.history-container {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 16px;
+  }
+  
+  mat-table {
+    width: 100%;
+    tr {
+        height: auto;
+    }
+  }
+  
+  mat-header-cell,
+  mat-cell {
+    padding: 12px;
+    text-align: left;
+  }
+  
