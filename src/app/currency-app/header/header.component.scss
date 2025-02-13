@@ -2,20 +2,10 @@
     height: 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
-    background-color: #333;
+    padding-left: 16px;
+    background-color: #015cbb;
   }
-  
+
   button {
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button.active {
-    font-weight: bold;
-    text-decoration: underline;
+    padding: 8px;
   }

@@ -1,1 +1,56 @@
-<p>currency works!</p>
+<mat-card class="currency-converter">
+  <mat-card-title>Currency Converter</mat-card-title>
+
+  <div class="currency-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input
+        matInput
+        title="{{ amount }}"
+        min="1"
+        type="number"
+        [(ngModel)]="amount"
+        placeholder="Enter amount"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>From</mat-label>
+      <mat-select [(ngModel)]="fromCurrency">
+        <mat-option *ngFor="let currency of currencies" [value]="currency">
+          {{ currency }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To</mat-label>
+      <mat-select [(ngModel)]="toCurrency">
+        <mat-option *ngFor="let currency of currencies" [value]="currency">
+          {{ currency }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="amount < 1"
+      (click)="convertCurrency()"
+    >
+      Convert
+    </button>
+  </div>
+
+  <mat-card *ngIf="convertedAmount !== null" class="result-card">
+    <mat-card-content>
+      <p>
+        <span class="currency">{{ submitedAmount }} {{ fromCurrency }}</span>
+        =
+        <span class="currency"
+          >{{ convertedAmount }} {{ sumittedCurrency }}</span
+        >
+      </p>
+    </mat-card-content>
+  </mat-card>
+</mat-card>
